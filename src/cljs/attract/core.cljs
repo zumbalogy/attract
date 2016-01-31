@@ -6,7 +6,10 @@
             [attract.painter :as paint]))
 
 (defn home-page []
-  [:canvas#home-canvas {:on-mouse-move paint/draw-dejong}])
+  [:canvas#home-canvas {:on-mouse-move paint/draw-dejong
+                        :on-click paint/reset-a-b
+                        :height 800
+                        :width 1550}])
 
 (defn current-page []
   [:div [(session/get :current-page)]])
