@@ -4,19 +4,21 @@
 (def x (atom 1))
 (def y (atom 1))
 
-(def a (rand))
-(def b (rand))
-(def c (rand))
-(def d (rand))
+(def a 2.0)
+(def b -3.0)
+(def c (atom (rand)))
+(def d (atom (rand)))
 
-; maybe make color dependant on how far away this new point is from prev one
+; maybe make color dependant on how far away this new point is from prev on
 
 (defn dejong [[x y]]
-  (let [a 2.01
-        b -3.00
-        x2 (+ (Math.sin (* a y)) (* c (Math.cos (* a x))))
-        y2 (+ (Math.sin (* b x)) (* d (Math.cos (* b y))))]
+  (let [x2 (+ (Math.sin (* a y)) (* @c (Math.cos (* a x))))
+        y2 (+ (Math.sin (* b x)) (* @d (Math.cos (* b y))))]
     [x2 y2]))
+
+(defn reset-settings [click]
+  (reset! c (/ (.-pageX click) 1000))
+  (reset! d (/ (.-pageY click) 1000)))
 
 (defn reset-x-y []
   (let [pair (dejong [@x @y])]
@@ -27,7 +29,7 @@
   (let [r (int (* 100 (Math.abs x)))
         g 40
         b (int (* 100 (Math.abs y)))
-        a 1]
+        a 0.5]
     (str "rgba(" r "," g "," b "," a ")")))
 
 (defn get-ctx [target-id]
@@ -41,9 +43,10 @@
     (.scale ctx 150 150)
     ctx))
 
-(defn draw-dejong [target-id]
-  (let [ctx (get-ctx target-id)]
-    (doseq [z (range 100000)]
+(defn draw-dejong [click]
+  (reset-settings click)
+  (let [ctx (get-ctx "#home-canvas")]
+    (doseq [z (range 50000)]
       (set! (.-fillStyle ctx) (gen-color @x @y))
       (.fillRect ctx @x @y 0.01 0.01)
       (reset-x-y))))

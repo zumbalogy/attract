@@ -5,12 +5,8 @@
             [accountant.core :as accountant]
             [attract.painter :as paint]))
 
-(def paint-caller
-  (with-meta identity
-    {:component-did-mount #(paint/draw-dejong "#home-canvas")}))
-
 (defn home-page []
-  [paint-caller [:canvas#home-canvas]])
+  [:canvas#home-canvas {:on-mouse-move paint/draw-dejong}])
 
 (defn current-page []
   [:div [(session/get :current-page)]])
