@@ -1,14 +1,8 @@
 (ns attract.painter
   (:require [cljsjs.d3]))
 
-(defn draw-dejong [target-id]
-  (js/console.log (get-ctx target-id)))
-
-(defn get-ctx [target-id]
-  (let [canvas (js/d3.select target-id)
-        node (.node canvas)
-        ctx (.getContext node "2d")]
-    ctx))
+(def x (atom 1))
+(def y (atom 1))
 
 (defn dejong [[x y]]
   (let [a 2.01
@@ -19,26 +13,32 @@
         y2 (+ (Math.sin (* b x)) (* d (Math.cos (* b y))))]
     [x2 y2]))
 
+(defn reset-x-y []
+  (let [pair (dejong [@x @y])]
+    (reset! x (first pair))
+    (reset! y (last pair))))
 
+(defn gen-color [x y]
+  (let [r (int (* 100 (Math.abs x)))
+        g 40
+        b (int (* 100 (Math.abs y)))
+        a 0.1]
+    (str "rgba(" r "," g "," b "," a ")")))
 
-  ; width = 1000
-  ; height = 1000
-  ; canvas = d3.select('body').append('canvas').attr('width', width).attr('height', height)
-  ; color = d3.scale.linear().domain([0, 6]).range(['blue', 'red']).interpolate(d3.interpolateHcl)
-  ; context = canvas.node().getContext('2d')
-  ;
-  ; d3.timer ->
-  ;   context.save()
-  ;   context.globalCompositeOperation = 'lighter'
-  ;   context.translate(width / 2, height / 2)
-  ;   context.scale(150, 150)
-  ;   i = 0
-  ;   while i < 2000
-  ;     r = Math.floor(Math.abs(x) * 100)
-  ;     b = Math.floor(Math.abs(y) * 100)
-  ;     context.fillStyle = "rgba(#{r}, 40, #{b}, 0.1)"
-  ;     [x, y] = dejong(x, y)
-  ;     context.fillRect(x, y, 0.005, 0.005)
-  ;     context.stroke()
-  ;     i++
-  ;   context.restore())
+(defn get-ctx [target-id]
+  (let [canvas (js/d3.select target-id)
+        node (.node canvas)
+        ctx (.getContext node "2d")]
+    (.attr canvas "width" 1550)
+    (.attr canvas "height" 800)
+    (set! (.-globalCompositeOperation ctx) "lighter")
+    (.translate ctx 750 400)
+    (.scale ctx 100 100)
+    ctx))
+
+(defn draw-dejong [target-id]
+  (let [ctx (get-ctx target-id)]
+    (doall (repeatedly 1000000 (fn []
+                                (set! (.-fillStyle ctx) (gen-color @x @y))
+                                (.fillRect ctx @x @y 0.01 0.01)
+                                (reset-x-y))))))
