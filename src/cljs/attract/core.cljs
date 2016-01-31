@@ -1,25 +1,22 @@
 (ns attract.core
-    (:require [reagent.core :as reagent :refer [atom]]
-              [reagent.session :as session]
-              [secretary.core :as secretary :include-macros true]
-              [accountant.core :as accountant]))
+  (:require [reagent.core :as reagent :refer [atom]]
+            [reagent.session :as session]
+            [secretary.core :as secretary :include-macros true]
+            [accountant.core :as accountant]
+            [attract.painter :as paint]))
+
+(def paint-caller
+  (with-meta identity
+    {:component-did-mount #(paint/draw-dejong "#home-canvas")}))
 
 (defn home-page []
-  [:div [:h2 "Welcome to attract"]
-   [:div [:a {:href "/about"} "go to about page"]]])
-
-(defn about-page []
-  [:div [:h2 "About attract"]
-   [:div [:a {:href "/"} "go to the home page"]]])
+  [paint-caller [:canvas#home-canvas]])
 
 (defn current-page []
   [:div [(session/get :current-page)]])
 
 (secretary/defroute "/" []
   (session/put! :current-page #'home-page))
-
-(secretary/defroute "/about" []
-  (session/put! :current-page #'about-page))
 
 (defn mount-root []
   (reagent/render [current-page] (.getElementById js/document "app")))

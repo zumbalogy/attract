@@ -13,7 +13,8 @@
                  [org.clojure/clojurescript "1.7.228" :scope "provided"]
                  [secretary "1.2.3"]
                  [venantius/accountant "0.1.6"
-                  :exclusions [org.clojure/tools.reader]]]
+                  :exclusions [org.clojure/tools.reader]]
+                 [cljsjs/d3 "3.5.7-1"]]
 
   :plugins [[lein-environ "1.0.2"]
             [lein-cljsbuild "1.1.1"]
@@ -36,17 +37,14 @@
   :source-paths ["src/clj"]
   :resource-paths ["resources" "target/cljsbuild"]
 
-  :minify-assets
-  {:assets
-   {"resources/public/css/site.min.css" "resources/public/css/site.css"}}
+  :minify-assets {:assets {"resources/public/css/site.min.css" "resources/public/css/site.css"}}
 
-  :cljsbuild {:builds {:app {:source-paths ["src/cljs" "src/cljc"]
+  :cljsbuild {:builds {:app {:source-paths ["src/cljs"]
                              :compiler {:output-to "target/cljsbuild/public/js/app.js"
                                         :output-dir "target/cljsbuild/public/js/out"
                                         :asset-path   "js/out"
                                         :optimizations :none
                                         :pretty-print  true}}}}
-
 
   :profiles {:dev {:repl-options {:init-ns attract.repl}
 
