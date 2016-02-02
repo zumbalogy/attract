@@ -18,18 +18,22 @@
 
 ; maybe make color dependant on how far away this new point is from prev on
 
+(defn round [x]
+  (/ (Math.floor (* 100 x)) 100))
+
 (defn dejong [[x y]]
   (let [x2 (+ (Math.sin (* @a y)) (* @c (Math.cos (* @a x))))
         y2 (+ (Math.sin (* @b x)) (* @d (Math.cos (* @b y))))]
     [x2 y2]))
 
 (defn reset-c-d [e]
+  (set! (.-title js/document) (str "c:" (round @c) "__d:" (round @d)))
   (reset! c (/ (.-pageX e) 900))
   (reset! d (/ (.-pageY e) 900)))
 
 (defn reset-x-y []
+  ; (set! (.-title js/document) (str "a:" @a "b:" @b "c:" @c "d:" @d))
   (let [pair (dejong [@x @y])]
-    (set! (.-href js/location) (str "# a: " @a " b: " @b " c: " @c " d: " @d))
     (reset! x (first pair))
     (reset! y (last pair))))
 
@@ -53,7 +57,7 @@
 (defn draw-dejong [e]
   (reset-c-d e)
   (let [ctx (get-ctx "#home-canvas")]
-    (doseq [z (range 20000)]
+    (doseq [z (range 80000)]
       (set! (.-fillStyle ctx) (gen-color @x @y))
       (.fillRect ctx @x @y 0.01 0.01)
       (reset-x-y))))
