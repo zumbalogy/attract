@@ -20,6 +20,10 @@
         y2 (+ (Math.sin (* @b x)) (* @d (Math.cos (* @b y))))]
     [x2 y2]))
 
+(defn reset-a-b []
+  (reset! a (rand 3))
+  (reset! b (rand 3)))
+
 (defn reset-c-d [x y]
   (reset! c (/ x 900))
   (reset! d (/ y 900))
@@ -39,23 +43,30 @@
         a 0.4]
     (str "rgba(" r "," g "," b "," a ")")))
 
-(defn get-ctx [target-id] ; TODO: only do this once to avoid extra work
+(defn clear-canvas [ctx]
+  (.save ctx)
+  (.setTransform ctx 1 0 0 1 0 0)
+  (.clearRect ctx 0 0 1550 800) ; TODO: make dynamic
+  (.restore ctx))
+
+(defn get-ctx [target-id]
   (let [canvas (js/d3.select target-id)
         node (.node canvas)
         ctx (.getContext node "2d")]
-    (.attr canvas "width" 1550) ; TODO: look into faster way to clear canvas
-    ; (set! (.-globalCompositeOperation ctx) "lighter")
+    ; (set! (.-globalCompositeOperation ctx) "source-over") ; default
+    (set! (.-globalCompositeOperation ctx) "lighter")
     (.translate ctx 800 400)
     (.scale ctx 150 150)
     ctx))
 
-(defn reset-a-b []
-  (reset! a (rand 3))
-  (reset! b (rand 3)))
+(defn key-handler [ctx e]
+  (case (.-keyCode e)
+    32 (clear-canvas ctx)
+    "default"))
 
 (defn time-fn [ctx]
   (reset-c-d @mouse/x @mouse/y)
-  (doseq [z (range 20000)]
+  (doseq [z (range 10000)]
     (set! (.-fillStyle ctx) (gen-color @old-x @old-y))
     (.fillRect ctx @x @y 0.01 0.01)
     (reset-x-y))
@@ -64,4 +75,5 @@
 (defn init [& args]
   (reset-a-b)
   (let [ctx (get-ctx "#home-canvas")]
+    (.addEventListener js/window "keypress" #(key-handler ctx %))
     (js/d3.timer #(time-fn ctx))))
