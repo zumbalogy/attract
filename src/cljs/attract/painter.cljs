@@ -36,7 +36,7 @@
   (let [r (int (* 100 (Math.abs x)))
         g 40
         b (int (* 100 (Math.abs y)))
-        a 1]
+        a 0.4]
     (str "rgba(" r "," g "," b "," a ")")))
 
 (defn get-ctx [target-id] ; TODO: only do this once to avoid extra work
@@ -44,7 +44,7 @@
         node (.node canvas)
         ctx (.getContext node "2d")]
     (.attr canvas "width" 1550) ; TODO: look into faster way to clear canvas
-    (set! (.-globalCompositeOperation ctx) "lighter")
+    ; (set! (.-globalCompositeOperation ctx) "lighter")
     (.translate ctx 800 400)
     (.scale ctx 150 150)
     ctx))
@@ -55,7 +55,7 @@
 
 (defn time-fn [ctx]
   (reset-c-d @mouse/x @mouse/y)
-  (doseq [z (range 25000)]
+  (doseq [z (range 20000)]
     (set! (.-fillStyle ctx) (gen-color @old-x @old-y))
     (.fillRect ctx @x @y 0.01 0.01)
     (reset-x-y))
@@ -63,4 +63,5 @@
 
 (defn init [& args]
   (reset-a-b)
-  (js/d3.timer #(time-fn (get-ctx "#home-canvas"))))
+  (let [ctx (get-ctx "#home-canvas")]
+    (js/d3.timer #(time-fn ctx))))
