@@ -3,6 +3,8 @@
 
 (def x (atom 1))
 (def y (atom 1))
+(def old-x (atom 1))
+(def old-y (atom 1))
 
 (def a (atom 2.0))
 (def b (atom -3.0))
@@ -16,8 +18,6 @@
   (.clearRect ctx 0 0 width height)
   (.restore ctx))
 
-; maybe make color dependant on how far away this new point is from prev on
-
 (defn round [x]
   (/ (Math.floor (* 100 x)) 100))
 
@@ -27,13 +27,15 @@
     [x2 y2]))
 
 (defn reset-c-d [e]
-  (set! (.-title js/document) (str "c:" (round @c) "__d:" (round @d)))
+  (set! (.-title js/document) (str "c:" (round @c) "_d:" (round @d)))
   (reset! c (/ (.-pageX e) 900))
   (reset! d (/ (.-pageY e) 900)))
 
 (defn reset-x-y []
   ; (set! (.-title js/document) (str "a:" @a "b:" @b "c:" @c "d:" @d))
   (let [pair (dejong [@x @y])]
+    (reset! old-y @y)
+    (reset! old-x @x)
     (reset! x (first pair))
     (reset! y (last pair))))
 
@@ -41,7 +43,7 @@
   (let [r (int (* 100 (Math.abs x)))
         g 40
         b (int (* 100 (Math.abs y)))
-        a 0.7]
+        a 1]
     (str "rgba(" r "," g "," b "," a ")")))
 
 (defn get-ctx [target-id] ; TODO: only do this once to avoid extra work
@@ -57,12 +59,16 @@
 (defn draw-dejong [e]
   (reset-c-d e)
   (let [ctx (get-ctx "#home-canvas")]
-    (doseq [z (range 80000)]
-      (set! (.-fillStyle ctx) (gen-color @x @y))
+    (doseq [z (range 25000)]
+      (set! (.-fillStyle ctx) (gen-color @old-x @old-y))
       (.fillRect ctx @x @y 0.01 0.01)
       (reset-x-y))))
 
 (defn reset-a-b [e]
   (reset! a (rand 3))
-  (reset! b (rand 3))
-  (draw-dejong e))
+  (reset! b (rand 3)))
+  ; (draw-dejong e))
+
+(defn init [& args] (js/console.log args "dsf"))
+
+; (let [ctx (get-ctx "#home-canvas")])
