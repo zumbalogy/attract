@@ -15,9 +15,19 @@
 (defn round [x]
   (/ (Math.floor (* 100 x)) 100))
 
-(defn dejong [[x y]]
+(defn clifford [[x y]]
   (let [x2 (+ (Math.sin (* @a y)) (* @c (Math.cos (* @a x))))
         y2 (+ (Math.sin (* @b x)) (* @d (Math.cos (* @b y))))]
+    [x2 y2]))
+
+(defn dejong [[x y]]
+  (let [x2 (- (Math.sin (* @a y) (Math.cos (* @b x))))
+        y2 (- (Math.sin (* @c x)) (Math.cos (* @d y)))]
+    [x2 y2]))
+
+(defn svensson [[x y]]
+  (let [x2 (- (* @d (Math.sin (* @a x))) (Math.sin (* @b y)))
+        y2 (- (* @c (Math.cos (* @a x))) (Math.cos (* @b y)))]
     [x2 y2]))
 
 (defn reset-a-b []
@@ -30,7 +40,7 @@
   (set! (.-title js/document) (str "c:" (round @c) "_d:" (round @d))))
 
 (defn reset-x-y []
-  (let [pair (dejong [@x @y])]
+  (let [pair (svensson [@x @y])]
     (reset! old-y @y)
     (reset! old-x @x)
     (reset! x (first pair))
