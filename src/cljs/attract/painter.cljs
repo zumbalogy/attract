@@ -1,5 +1,6 @@
 (ns attract.painter
-  (:require [cljsjs.d3]))
+  (:require [cljsjs.d3]
+            [attract.mouse :as mouse]))
 
 (def x (atom 1))
 (def y (atom 1))
@@ -11,13 +12,6 @@
 (def c (atom (rand)))
 (def d (atom (rand)))
 
-(defn clear-canvas
-  [ctx width height]
-  (.save ctx)
-  (.setTransform ctx 1 0 0 1 0 0)
-  (.clearRect ctx 0 0 width height)
-  (.restore ctx))
-
 (defn round [x]
   (/ (Math.floor (* 100 x)) 100))
 
@@ -26,13 +20,12 @@
         y2 (+ (Math.sin (* @b x)) (* @d (Math.cos (* @b y))))]
     [x2 y2]))
 
-(defn reset-c-d [e]
-  (set! (.-title js/document) (str "c:" (round @c) "_d:" (round @d)))
-  (reset! c (/ (.-pageX e) 900))
-  (reset! d (/ (.-pageY e) 900)))
+(defn reset-c-d [x y]
+  (reset! c (/ x 900))
+  (reset! d (/ y 900))
+  (set! (.-title js/document) (str "c:" (round @c) "_d:" (round @d))))
 
 (defn reset-x-y []
-  ; (set! (.-title js/document) (str "a:" @a "b:" @b "c:" @c "d:" @d))
   (let [pair (dejong [@x @y])]
     (reset! old-y @y)
     (reset! old-x @x)
@@ -56,19 +49,18 @@
     (.scale ctx 150 150)
     ctx))
 
-(defn draw-dejong [e]
-  (reset-c-d e)
-  (let [ctx (get-ctx "#home-canvas")]
-    (doseq [z (range 25000)]
-      (set! (.-fillStyle ctx) (gen-color @old-x @old-y))
-      (.fillRect ctx @x @y 0.01 0.01)
-      (reset-x-y))))
-
-(defn reset-a-b [e]
+(defn reset-a-b []
   (reset! a (rand 3))
   (reset! b (rand 3)))
-  ; (draw-dejong e))
 
-(defn init [& args] (js/console.log args "dsf"))
+(defn time-fn [ctx]
+  (reset-c-d @mouse/x @mouse/y)
+  (doseq [z (range 25000)]
+    (set! (.-fillStyle ctx) (gen-color @old-x @old-y))
+    (.fillRect ctx @x @y 0.01 0.01)
+    (reset-x-y))
+  false)
 
-; (let [ctx (get-ctx "#home-canvas")])
+(defn init [& args]
+  (reset-a-b)
+  (js/d3.timer #(time-fn (get-ctx "#home-canvas"))))
