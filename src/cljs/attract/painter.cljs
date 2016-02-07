@@ -40,14 +40,24 @@
     [x2 y2]))
 
 (defn duffing [[x y]]
-  (js/console.log x y)
-  (let [x2 (+ x (* 0.04 y))
-        y2 (+ y (* 0.04 (+ (- x (* x x x) (* 0.2 y)) (* 0.3 (Math.cos @z)))))
-        z2 (+ @z 0.04)]
+  (let [h (/ @a 20)
+        x2 (+ x (* h y))
+        y2 (+ y (* h (+ (- x (* x x x) (* @c y)) (* @d (Math.cos @z)))))
+        z2 (+ @z h)]
     (reset! z z2)
     [x2 y2]))
 
-(def attract-fn (atom duffing))
+(defn triz [[x y]]
+  (let [x2 (/ x 2)
+        y2 (/ y 2)]
+    (rand-nth [[x2 y2]
+              ;  [(+ x2 0.5) (+ y2 0.86)]
+               [(+ x2 1) y2]
+               [x2 (- y2 1)]
+               [x2 (+ y2 1)]
+               [(- x2 1) y2]])))
+
+(def attract-fn (atom triz))
 
 (defn reset-a-b []
   (reset! x 1)
