@@ -22,8 +22,9 @@
     [x2 y2]))
 
 (defn dejong [[x y]]
+  ; all constants have to be between pi and negative pi
   (let [x2 (- (Math.sin (* @a y) (Math.cos (* @b x))))
-        y2 (- (Math.sin (* @c x)) (Math.cos (* @d y)))]
+        y2 (- (Math.sin (* (+ @c 1) x)) (Math.cos (* (+ @d 1) y)))]
     [x2 y2]))
 
 (defn svensson [[x y]]
@@ -57,7 +58,7 @@
                [x2 (+ y2 1)]
                [(- x2 1) y2]])))
 
-(def attract-fn (atom triz))
+(def attract-fn (atom dejong))
 
 (defn reset-a-b []
   (reset! x 1)
