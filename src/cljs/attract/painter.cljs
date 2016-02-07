@@ -2,7 +2,7 @@
   (:require [cljsjs.d3]
             [attract.mouse :as mouse]))
 
-(def x (atom 0.5))
+(def x (atom 0))
 (def y (atom 0))
 (def z (atom 0))
 (def old-x (atom 1))
@@ -39,18 +39,15 @@
     (reset! z z2)
     [x2 y2]))
 
-; x1 = x0 + h * a * (y0 - x0);
-; y1 = y0 + h * (x0 * (b - z0) - y0);
-; z1 = z0 + h * (x0 * y0 - c * z0);
-
-
 (defn duffing [[x y]]
-  (let [x2 y
-        ; y2 (- (+ x (* @b (Math.cos @c))) (Math.pow x 3) (* @a y))]
-        y2 (- (+ x (* 0.3 (Math.cos 1))) (Math.pow x 3) (* 0.25 y))]
+  (js/console.log x y)
+  (let [x2 (+ x (* 0.04 y))
+        y2 (+ y (* 0.04 (+ (- x (* x x x) (* 0.2 y)) (* 0.3 (Math.cos @z)))))
+        z2 (+ @z 0.04)]
+    (reset! z z2)
     [x2 y2]))
 
-(def attract-fn (atom lorenz))
+(def attract-fn (atom duffing))
 
 (defn reset-a-b []
   (reset! x 1)
@@ -90,8 +87,8 @@
         ctx (.getContext node "2d")]
     (set! (.-globalCompositeOperation ctx) "lighter")
     (.translate ctx 800 400)
-    ; (.scale ctx 150 150)
-    (.scale ctx 30 30)
+    (.scale ctx 150 150)
+    ; (.scale ctx 30 30)
     ctx))
 
 (defn key-handler [ctx e]
