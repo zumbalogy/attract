@@ -30,6 +30,8 @@
         y2 (- (* @c (Math.cos (* @a x))) (Math.cos (* @b y)))]
     [x2 y2]))
 
+(def attract-fn (atom clifford))
+
 (defn reset-a-b []
   (reset! a (rand 3))
   (reset! b (rand 3)))
@@ -40,7 +42,7 @@
   (set! (.-title js/document) (str "c:" (round @c) "_d:" (round @d))))
 
 (defn reset-x-y []
-  (let [pair (svensson [@x @y])]
+  (let [pair (@attract-fn [@x @y])]
     (reset! old-y @y)
     (reset! old-x @x)
     (reset! x (first pair))
@@ -63,15 +65,20 @@
   (let [canvas (js/d3.select target-id)
         node (.node canvas)
         ctx (.getContext node "2d")]
-    ; (set! (.-globalCompositeOperation ctx) "source-over") ; default
     (set! (.-globalCompositeOperation ctx) "lighter")
     (.translate ctx 800 400)
     (.scale ctx 150 150)
     ctx))
 
 (defn key-handler [ctx e]
+  (js/console.log (.-keyCode e))
   (case (.-keyCode e)
     32 (clear-canvas ctx)
+    49 (reset! attract-fn clifford)
+    50 (reset! attract-fn dejong)
+    51 (reset! attract-fn svensson)
+    91 (set! (.-globalCompositeOperation ctx) "lighter")
+    93 (set! (.-globalCompositeOperation ctx) "source-over")
     "default"))
 
 (defn time-fn [ctx]
