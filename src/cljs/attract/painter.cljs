@@ -2,15 +2,16 @@
   (:require [cljsjs.d3]
             [attract.mouse :as mouse]))
 
-(def x (atom 1))
-(def y (atom 1))
+(def x (atom 0.5))
+(def y (atom 0))
+(def z (atom 0))
 (def old-x (atom 1))
 (def old-y (atom 1))
 
-(def a (atom 2.0))
-(def b (atom -3.0))
-(def c (atom (rand)))
-(def d (atom (rand)))
+(def a (atom 0.003))
+(def b (atom 28))
+(def c (atom 10))
+(def d (atom 2.6666))
 
 (defn round [x]
   (/ (Math.floor (* 100 x)) 100))
@@ -30,9 +31,31 @@
         y2 (- (* @c (Math.cos (* @a x))) (Math.cos (* @b y)))]
     [x2 y2]))
 
-(def attract-fn (atom clifford))
+(defn lorenz [[x y]]
+  (let [
+        x2 (+ x (* 0.01 @b (- y x)))
+        y2 (+ y (* 0.01 (- (* x (- 28 @z)) y)))
+        z2 (+ @z (* 0.01 (- (* y x) (* @d @z))))]
+    (reset! z z2)
+    [x2 y2]))
+
+; x1 = x0 + h * a * (y0 - x0);
+; y1 = y0 + h * (x0 * (b - z0) - y0);
+; z1 = z0 + h * (x0 * y0 - c * z0);
+
+
+(defn duffing [[x y]]
+  (let [x2 y
+        ; y2 (- (+ x (* @b (Math.cos @c))) (Math.pow x 3) (* @a y))]
+        y2 (- (+ x (* 0.3 (Math.cos 1))) (Math.pow x 3) (* 0.25 y))]
+    [x2 y2]))
+
+(def attract-fn (atom lorenz))
 
 (defn reset-a-b []
+  (reset! x 1)
+  (reset! y 1)
+  (reset! z 1)
   (reset! a (rand 3))
   (reset! b (rand 3)))
 
@@ -67,16 +90,18 @@
         ctx (.getContext node "2d")]
     (set! (.-globalCompositeOperation ctx) "lighter")
     (.translate ctx 800 400)
-    (.scale ctx 150 150)
+    ; (.scale ctx 150 150)
+    (.scale ctx 30 30)
     ctx))
 
 (defn key-handler [ctx e]
-  (js/console.log (.-keyCode e))
   (case (.-keyCode e)
     32 (clear-canvas ctx)
     49 (reset! attract-fn clifford)
     50 (reset! attract-fn dejong)
     51 (reset! attract-fn svensson)
+    52 (reset! attract-fn lorenz)
+    53 (reset! attract-fn duffing)
     91 (set! (.-globalCompositeOperation ctx) "lighter")
     93 (set! (.-globalCompositeOperation ctx) "source-over")
     "default"))
