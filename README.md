@@ -127,5 +127,6 @@ more better examples
 ![example](https://raw.githubusercontent.com/zumbalogy/attract/master/resources/public/pictures/Screenshot%20from%202016-02-07%2011-43-58.png)
 ![example](https://raw.githubusercontent.com/zumbalogy/attract/master/resources/public/pictures/Screenshot%20from%202016-02-06%2013-59-19.png)
 ![example](https://raw.githubusercontent.com/zumbalogy/attract/master/resources/public/pictures/Screenshot%20from%202016-02-07%2011-12-34.png)
-![example](https://raw.githubusercontent.com/zumbalogy/attract/master/resources/public/pictures/Screenshot%20from%202016-02-07%2011-12-34.png)
+![example](https://raw.githubusercontent.com/zumbalogy/attract/master/resources/public/pictures/Screenshot%20from%202016-02-07%2000-43-51.png)
+![example](https://raw.githubusercontent.com/zumbalogy/attract/master/resources/public/pictures/Screenshot%20from%202016-02-07%2000-20-41.png)
 ![example](https://raw.githubusercontent.com/zumbalogy/attract/master/resources/public/pictures/IMG_20160209_161917.jpg)
