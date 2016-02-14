@@ -67,7 +67,7 @@ y2 (+ y (* h (+ (- x (* x x x) (* @c y)) (* @d (Math.cos @z)))))
 z2 (+ @z h)
 ```
 
-6 sierpinski lots of good stuff here http://www.oftenpaper.net/sierpinski.htm
+6 sierpinski http://www.oftenpaper.net/sierpinski.htm
 ```clojure
 x2 (/ x 2)
 y2 (/ y 2)]
@@ -114,16 +114,11 @@ more functions
 
 prettier legend
 
-change background colors (maybe have a option to have a changing background, or gradient or user uploaded)
-
 better code cleaning and maybe a file for helpers (like one for js/console.log)
 
 work on screen sizes besides just my own, mobile and test other browsers
 
 more better examples
-
-zooming in and out (effectivly) by chaning the scalling on the canvas. up and down keys would make sense.
-would want it to be as smooth as possible though. maybe side arrows could rotate?
 
 better title and add a favicon
 
