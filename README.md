@@ -119,6 +119,12 @@ http://sprott.physics.wisc.edu/pubs/paper317.htm
 
 https://explord.com/experiments/strange-attractors/
 
+http://pixellab.jozefmaxted.co.uk/#/attractors
+
+http://rectangleworld.com/demos/ChaosGame2/chaos_game_2.html
+
+https://github.com/jaybosamiya/chaos-game
+
 # TODO
 Performance tuning and maybe getting rid of d3
 
@@ -134,7 +140,7 @@ work on screen sizes besides just my own, mobile and test other browsers
 
 more better examples
 
-better title and add a favicon
+fix bug where snapshot sometimes has white background
 
 # Examples
 

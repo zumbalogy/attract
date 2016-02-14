@@ -40,18 +40,26 @@
     (reset! z z2)
     [x2 y2]))
 
-(js/eval "window.aizawa = function (x, y, z) {
-  var t = 0.01;
-  var e = 0.25, a = 0.95, l = 0.6, d = 3.5, b = 0.7, c = 0.1;
-  return [
-    x + t * ((z - b) * x - d * y),
-    y + t * (d * x + (z - b) * y),
-    z + t * (l + a * z - z * z * z / 3 - (x * x + y * y) * (1 + e * z) + c * z * x * x * x)
-  ]
-}")
-
 (defn aizawa [[x y]]
-  (let [[x2 y2 z2] (js/aizawa x y @z)]
+  (let [
+        t 0.01
+        e 0.25
+        a 0.95
+        l 0.6
+        d 3.5
+        b 0.7
+        c 0.1
+        x2 (+ x (* t (- (* (- @z b) x) (* d y))))
+        y2 (+ y (* t (+ (* d x) (* y (- @z b)))))
+        czxxx (* c @z x x x)
+        ez (+ 1 (* e @z))
+        xxyy (+ (* x x) (* y y))
+        z3 (/ (* @z @z @z) 3)
+        az (* a @z)
+        yez (* ez xxyy)
+        eek (- (+ l az czxxx) z3 yez)
+        z2 (+ @z (* t eek))
+        ]
     (reset! z z2)
     [x2 y2]))
 
