@@ -119,6 +119,12 @@
     98 (reset! b (rand 3))
     "default"))
 
+
+    ; TODO: open as png in new tab (need to make background color line up)
+    ; https://blogs.adobe.com/digitalmedia/2011/01/setting-the-background-color-when-generating-images-from-canvas-todataurl/
+    ; var img    = canvas.toDataURL("image/png");
+    ; window.open(img, '_blank');
+
 (defn time-fn [ctx]
   (reset-c-d @mouse/x @mouse/y)
   (doseq [z (range 10000)]
