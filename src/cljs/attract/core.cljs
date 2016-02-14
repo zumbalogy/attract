@@ -18,6 +18,7 @@
 (def legend
   [:p.legend "click resets a and b,
               spacebar clear canvas,
+              enter snapshot,
               a reset a,
               b reset b,
               [ lighten,

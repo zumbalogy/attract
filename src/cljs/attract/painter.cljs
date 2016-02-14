@@ -97,16 +97,16 @@
         node (.node canvas)
         ctx (.getContext node "2d")]
     (set! (.-globalCompositeOperation ctx) "lighter")
+    (set! (.-fillStyle ctx) "black")
+    (.fillRect ctx -1000 -1000 100000 1000000)
     (.translate ctx 800 400)
     (.scale ctx 150 150)
-    ; (.scale ctx 30 30)
     ctx))
 
 (defn key-handler [ctx e]
   (js/console.log (.-keyCode e))
   (case (.-keyCode e)
-    13 (set! (-> js/document .-body .-style .-backgroundColor)
-             (rand-nth ["white" "black" "pink" "teal" "gray"]))
+    13 (.open js/window (.toDataURL js/canvas "image/png"))
     32 (clear-canvas ctx)
     37 (.rotate ctx 0.1)
     39 (.rotate ctx -0.1)
