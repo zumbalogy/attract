@@ -121,6 +121,9 @@ work on screen sizes besides just my own
 
 more better examples
 
+zooming in and out (effectivly) by chaning the scalling on the canvas. up and down keys would make sense.
+would want it to be as smooth as possible though. maybe side arrows could rotate?
+
 # Examples
 
 
