@@ -1,4 +1,21 @@
 body {
   background-color: #000;
-  color: #fff;
+  color: #ccc;
+  font-family: sans-serif;
+  font-size: 0.8em;
+}
+
+.stats {
+  position: absolute;
+  margin-top: 24px;
+}
+
+.legend {
+  margin-top: 2px;
+  position: absolute;
+}
+
+.legend .github {
+  color: teal;
+  text-decoration: none;
 }

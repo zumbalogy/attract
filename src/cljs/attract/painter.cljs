@@ -1,5 +1,6 @@
 (ns attract.painter
-  (:require [cljsjs.d3]
+  (:require [reagent.core :as r]
+            [cljsjs.d3]
             [attract.mouse :as mouse]))
 
 (def x (atom 0))
@@ -8,10 +9,10 @@
 (def old-x (atom 1))
 (def old-y (atom 1))
 
-(def a (atom 0.003))
-(def b (atom 28))
-(def c (atom 10))
-(def d (atom 2.6666))
+(def a (r/atom 0.003))
+(def b (r/atom 28))
+(def c (r/atom 10))
+(def d (r/atom 2.6666))
 
 (defn round [x]
   (/ (Math.floor (* 100 x)) 100))
@@ -58,7 +59,7 @@
                [x2 (+ y2 1)]
                [(- x2 1) y2]])))
 
-(def attract-fn (atom clifford))
+(def attract-fn (r/atom clifford))
 
 (defn reset-a-b []
   (reset! x 1)
@@ -103,6 +104,7 @@
     ctx))
 
 (defn key-handler [ctx e]
+  (js/console.log (.-keyCode e))
   (case (.-keyCode e)
     32 (clear-canvas ctx)
     49 (reset! attract-fn clifford)
@@ -113,6 +115,8 @@
     54 (reset! attract-fn triz)
     91 (set! (.-globalCompositeOperation ctx) "lighter")
     93 (set! (.-globalCompositeOperation ctx) "source-over")
+    97 (reset! a (rand 3))
+    98 (reset! b (rand 3))
     "default"))
 
 (defn time-fn [ctx]
@@ -123,8 +127,11 @@
     (reset-x-y))
   false)
 
+(defn stats []
+  [:p.stats "a " @a " b " @b " c " @c " d " @d])
+
 (defn init [& args]
   (reset-a-b)
-  (let [ctx (get-ctx "#home-canvas")]
+  (let [ctx (get-ctx "#canvas")]
     (.addEventListener js/window "keypress" #(key-handler ctx %))
     (js/d3.timer #(time-fn ctx))))
