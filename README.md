@@ -1,9 +1,35 @@
 This is a fractal and attractor drawing playground thing written in clojure/clojurescript/reagent/d3.
 
 
+# Keyboard Shortcuts
 
+click resets a and b
 
+spacebar clear canvas
 
+a reset a
+
+b reset b
+
+[ sets the drawing mode to lighten
+
+] sets the drawing mode to darken
+
+1 clifford
+```clifford
+x2 (- (Math.sin (* @a y) (Math.cos (* @b x))))
+y2 (- (Math.sin (* (+ @c 1) x)) (Math.cos (* (+ @d 1) y)))
+```
+
+2 dejong,
+
+3 svensson,
+
+4 lorenz,
+
+5 duffing,
+
+6 sierpinski
 
 
 # TODO
