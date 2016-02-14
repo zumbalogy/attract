@@ -12,7 +12,7 @@ being drawn.
 
 Functions subject to change, and I want to add some more.
 
-Inspiration from: https://youtu.be/vLlbEZt-3j0
+Good bit of inspiration from: https://youtu.be/vLlbEZt-3j0
 
 # Keyboard Shortcuts
 
@@ -53,7 +53,7 @@ y2 (+ y (* 0.01 (- (* x (- 28 @z)) y)))
 z2 (+ @z (* 0.01 (- (* y x) (* @d @z))))
 ```
 
-5 duffing
+5 duffing http://paulbourke.net/fractals/duffing/
 ```clojure
 h (/ @a 20)
 x2 (+ x (* h y))
