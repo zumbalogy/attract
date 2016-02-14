@@ -116,3 +116,5 @@ var img = canvas.toDataURL("image/png");
 window.open(img, blank);
 
 better code cleaning and maybe a file for helpers (like one for js/console.log)
+
+work on screen sizes besides just my own
