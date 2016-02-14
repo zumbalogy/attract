@@ -69,8 +69,7 @@
 
 (defn reset-c-d [x y]
   (reset! c (/ x 900))
-  (reset! d (/ y 900))
-  (set! (.-title js/document) (str "c:" (round @c) "_d:" (round @d))))
+  (reset! d (/ y 900)))
 
 (defn reset-x-y []
   (let [pair (@attract-fn [@x @y])]
@@ -104,7 +103,6 @@
     ctx))
 
 (defn key-handler [ctx e]
-  (js/console.log (.-keyCode e))
   (case (.-keyCode e)
     13 (.open js/window (.toDataURL js/canvas "image/png"))
     32 (clear-canvas ctx)
