@@ -22,6 +22,10 @@ spacebar clear canvas
 
 enter opens a tab with a png snapshot of the canvas
 
+left and right arrow keys rotate where new 'paint' is placed
+
+up and down arrow keys zoom in and out, causing new 'paint' to be bigger or smaller
+
 a reset a
 
 b reset b

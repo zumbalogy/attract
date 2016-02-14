@@ -19,6 +19,7 @@
   [:p.legend "click resets a and b,
               spacebar clear canvas,
               enter snapshot,
+              arrow keys rotate and zoom,
               a reset a,
               b reset b,
               [ lighten,
