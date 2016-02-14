@@ -81,6 +81,8 @@ y2 (/ y 2)]
 ```
 
 # Further Reading
+http://chaoticatmospheres.com/mathrules-strange-attractors
+
 http://www.bentamari.com/attractors.html
 
 http://michaelalynmiller.com/blog/2013/06/18/epitrochoids-in-clojurescript/
@@ -106,6 +108,12 @@ http://paulbourke.net/fractals/thorn/
 http://paulbourke.net/fractals/henonphase/
 
 http://paulbourke.net/fractals/lyapunov/
+
+http://www.chaoscope.org/doc/attractors.htm
+
+http://chaoticatmospheres.com/mathrules-strange-attractors
+
+http://sprott.physics.wisc.edu/pubs/paper317.htm
 
 # TODO
 Performance tuning and maybe getting rid of d3
