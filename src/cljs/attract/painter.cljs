@@ -105,17 +105,23 @@
 (defn key-handler [ctx e]
   (js/console.log (.-keyCode e))
   (case (.-keyCode e)
+    13 (set! (-> js/document .-body .-style .-backgroundColor)
+             (rand-nth ["white" "black" "pink" "teal" "gray"]))
     32 (clear-canvas ctx)
+    37 (.rotate ctx 0.1)
+    39 (.rotate ctx -0.1)
+    40 (.scale ctx 0.97 0.97)
+    38 (.scale ctx 1.03 1.03)
     49 (reset! attract-fn clifford)
     50 (reset! attract-fn dejong)
     51 (reset! attract-fn svensson)
     52 (reset! attract-fn lorenz)
     53 (reset! attract-fn duffing)
     54 (reset! attract-fn triz)
-    91 (set! (.-globalCompositeOperation ctx) "lighter")
-    93 (set! (.-globalCompositeOperation ctx) "source-over")
     97 (reset! a (rand 3))
     98 (reset! b (rand 3))
+    219 (set! (.-globalCompositeOperation ctx) "lighter")
+    221 (set! (.-globalCompositeOperation ctx) "source-over")
     "default"))
 
 (defn time-fn [ctx]
@@ -132,5 +138,5 @@
 (defn init [& args]
   (reset-a-b)
   (let [ctx (get-ctx "#canvas")]
-    (.addEventListener js/window "keypress" #(key-handler ctx %))
+    (.addEventListener js/window "keydown" #(key-handler ctx %))
     (js/d3.timer #(time-fn ctx))))
