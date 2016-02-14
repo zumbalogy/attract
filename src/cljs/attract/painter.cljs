@@ -3,9 +3,9 @@
             [cljsjs.d3]
             [attract.mouse :as mouse]))
 
-(def x (atom 0))
-(def y (atom 0))
-(def z (atom 0))
+(def x (atom 0.1))
+(def y (atom 0.1))
+(def z (atom 0.2))
 (def old-x (atom 1))
 (def old-y (atom 1))
 
@@ -40,6 +40,21 @@
     (reset! z z2)
     [x2 y2]))
 
+(js/eval "window.aizawa = function (x, y, z) {
+  var t = 0.01;
+  var e = 0.25, a = 0.95, l = 0.6, d = 3.5, b = 0.7, c = 0.1;
+  return [
+    x + t * ((z - b) * x - d * y),
+    y + t * (d * x + (z - b) * y),
+    z + t * (l + a * z - z * z * z / 3 - (x * x + y * y) * (1 + e * z) + c * z * x * x * x)
+  ]
+}")
+
+(defn aizawa [[x y]]
+  (let [[x2 y2 z2] (js/aizawa x y @z)]
+    (reset! z z2)
+    [x2 y2]))
+
 (defn duffing [[x y]]
   (let [h (/ @a 20)
         x2 (+ x (* h y))
@@ -58,12 +73,12 @@
                [x2 (+ y2 1)]
                [(- x2 1) y2]])))
 
-(def attract-fn (r/atom clifford))
+(def attract-fn (r/atom aizawa))
 
 (defn reset-a-b []
-  (reset! x 1)
-  (reset! y 1)
-  (reset! z 1)
+  (reset! x 0.1)
+  (reset! y 0.1)
+  (reset! z 0.2)
   (reset! a (rand 3))
   (reset! b (rand 3)))
 
@@ -80,7 +95,7 @@
 
 (defn gen-color [x y]
   (let [r (int (* 100 (Math.abs x)))
-        g 40
+        g 40 ; think about doing something with z index
         b (int (* 100 (Math.abs y)))
         a 0.4]
     (str "rgba(" r "," g "," b "," a ")")))

@@ -1,3 +1,5 @@
+https://fract-attract.herokuapp.com/
+
 This is a fractal and attractor drawing playground thing written in clojure/clojurescript/reagent/d3.
 
 different functions are used for drawing. clicking and moving the mouse changes the constants used in the functions.
@@ -114,6 +116,8 @@ http://www.chaoscope.org/doc/attractors.htm
 http://chaoticatmospheres.com/mathrules-strange-attractors
 
 http://sprott.physics.wisc.edu/pubs/paper317.htm
+
+https://explord.com/experiments/strange-attractors/
 
 # TODO
 Performance tuning and maybe getting rid of d3
