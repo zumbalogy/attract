@@ -1,5 +1,18 @@
 This is a fractal and attractor drawing playground thing written in clojure/clojurescript/reagent/d3.
 
+different functions are used for drawing. clicking and moving the mouse changes the constants used in the functions.
+
+use the number keys to change what function is used. some functions do not use all of a b c and d.
+
+some of the functions are attractors and/or take a coordinate and return a coordinate. By feeding it to itself over and over
+again and plotting each step, funny shapes emerge.
+
+Right now, the color is determined by the x and y distance between the previous point and the current one
+being drawn.
+
+Functions subject to change, and I want to add some more.
+
+Inspiration from: https://youtu.be/vLlbEZt-3j0
 
 # Keyboard Shortcuts
 
@@ -15,22 +28,76 @@ b reset b
 
 ] sets the drawing mode to darken
 
-1 clifford
-```clifford
+1 clifford http://paulbourke.net/fractals/clifford/
+```clojure
+x2 (+ (Math.sin (* @a y)) (* @c (Math.cos (* @a x))))
+y2 (+ (Math.sin (* @b x)) (* @d (Math.cos (* @b y))))
+```
+
+2 dejong http://paulbourke.net/fractals/peterdejong/
+```clojure
 x2 (- (Math.sin (* @a y) (Math.cos (* @b x))))
 y2 (- (Math.sin (* (+ @c 1) x)) (Math.cos (* (+ @d 1) y)))
 ```
 
-2 dejong,
+3 svensson bottom of http://paulbourke.net/fractals/peterdejong/
+```clojure
+x2 (- (* @d (Math.sin (* @a x))) (Math.sin (* @b y)))
+y2 (- (* @c (Math.cos (* @a x))) (Math.cos (* @b y)))
+```
 
-3 svensson,
+4 lorenz https://en.wikipedia.org/wiki/Lorenz_system
+```clojure
+x2 (+ x (* 0.01 @b (- y x)))
+y2 (+ y (* 0.01 (- (* x (- 28 @z)) y)))
+z2 (+ @z (* 0.01 (- (* y x) (* @d @z))))
+```
 
-4 lorenz,
+5 duffing
+```clojure
+h (/ @a 20)
+x2 (+ x (* h y))
+y2 (+ y (* h (+ (- x (* x x x) (* @c y)) (* @d (Math.cos @z)))))
+z2 (+ @z h)
+```
 
-5 duffing,
+6 sierpinski lots of good stuff here http://www.oftenpaper.net/sierpinski.htm
+```clojure
+x2 (/ x 2)
+y2 (/ y 2)]
+(rand-nth [[x2 y2]
+           [(+ x2 1) y2]
+           [x2 (- y2 1)]
+           [x2 (+ y2 1)]
+           [(- x2 1) y2]])
+```
 
-6 sierpinski
+# Further Reading
+http://www.bentamari.com/attractors.html
 
+http://michaelalynmiller.com/blog/2013/06/18/epitrochoids-in-clojurescript/
+
+https://github.com/cjlarose/de-jong
+
+https://en.wikipedia.org/wiki/Barnsley_fern
+
+https://en.wikipedia.org/wiki/Newton_fractal
+
+https://en.wikipedia.org/wiki/Brownian_tree
+
+http://www.scholarpedia.org/article/Duffing_oscillator
+
+http://softology.com.au/tutorials/attractors2d/tutorial.htm
+
+https://en.wikipedia.org/wiki/Ikeda_map
+
+http://paulbourke.net/fractals/ikeda/
+
+http://paulbourke.net/fractals/thorn/
+
+http://paulbourke.net/fractals/henonphase/
+
+http://paulbourke.net/fractals/lyapunov/
 
 # TODO
 Performance tuning and maybe getting rid of d3
