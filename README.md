@@ -12,6 +12,8 @@ being drawn.
 
 Functions subject to change, and I want to add some more.
 
+If you make any cool looking ones, or know any related links/projects, please send them this way!
+
 Good bit of inspiration from: https://youtu.be/vLlbEZt-3j0
 
 # Keyboard Shortcuts
