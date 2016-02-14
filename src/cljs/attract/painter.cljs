@@ -41,8 +41,7 @@
     [x2 y2]))
 
 (defn aizawa [[x y]]
-  (let [
-        t 0.01
+  (let [t 0.01
         e 0.25
         a 0.95
         l 0.6
@@ -56,10 +55,7 @@
         xxyy (+ (* x x) (* y y))
         z3 (/ (* @z @z @z) 3)
         az (* a @z)
-        yez (* ez xxyy)
-        eek (- (+ l az czxxx) z3 yez)
-        z2 (+ @z (* t eek))
-        ]
+        z2 (+ @z (* t (- (+ l az czxxx) z3 (* ez xxyy))))]
     (reset! z z2)
     [x2 y2]))
 
