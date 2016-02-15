@@ -29,7 +29,8 @@
               3 svensson,
               4 lorenz,
               5 duffing,
-              6 sierpinski "
+              6 sierpinski,
+              7 aizawa "
               [:a.github {:href "https://github.com/zumbalogy/attract"} "GitHub"]])
 
 (defn home-page []

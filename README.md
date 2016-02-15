@@ -82,6 +82,31 @@ y2 (/ y 2)]
            [(- x2 1) y2]])
 ```
 
+7 aizawa http://www.algosome.com/articles/aizawa-attractor-chaos.html
+```clojure
+t 0.01
+e (/ @c 2)
+a 0.95
+l 0.6
+d (* 3.7 @d)
+b 0.7
+c 0.1
+
+x2 (+ x (* t (- (* (- @z b) x) (* d y))))
+y2 (+ y (* t (+ (* d x) (* y (- @z b)))))
+
+czxxx (* c @z x x x)
+ez (+ 1 (* e @z))
+xxyy (+ (* x x) (* y y))
+z3 (/ (* @z @z @z) 3)
+az (* a @z)
+
+z2 (+ @z (* t (- (+ l az czxxx) z3 (* ez xxyy))))]
+
+(reset! z z2)
+[x2 y2])
+```
+
 # Further Reading
 http://chaoticatmospheres.com/mathrules-strange-attractors
 
@@ -124,6 +149,8 @@ http://pixellab.jozefmaxted.co.uk/#/attractors
 http://rectangleworld.com/demos/ChaosGame2/chaos_game_2.html
 
 https://github.com/jaybosamiya/chaos-game
+
+https://github.com/alisey/explord.com/blob/master/experiments/strange-attractors/js/attractor.js
 
 # TODO
 Performance tuning and maybe getting rid of d3

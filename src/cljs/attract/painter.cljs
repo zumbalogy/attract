@@ -43,11 +43,11 @@
 (defn aizawa [[x y]]
   (let [t 0.01
         ; e 0.25
-        e @c
+        e (/ @c 2)
         a 0.95
         l 0.6
         ; d 3.5
-        d (* 3 @d)
+        d (* 3.7 @d)
         b 0.7
         c 0.1
         x2 (+ x (* t (- (* (- @z b) x) (* d y))))
@@ -79,12 +79,15 @@
                [x2 (+ y2 1)]
                [(- x2 1) y2]])))
 
-(def attract-fn (r/atom aizawa))
+(def attract-fn (r/atom clifford))
 
-(defn reset-a-b []
+(defn clean-xyz []
   (reset! x 0.1)
   (reset! y 0.1)
-  (reset! z 0.2)
+  (reset! z 0.2))
+
+(defn reset-a-b []
+  (clean-xyz)
   (reset! a (rand 3))
   (reset! b (rand 3)))
 
@@ -107,9 +110,7 @@
     (str "rgba(" r "," g "," b "," a ")")))
 
 (defn clear-canvas [ctx]
-  (reset! x 0.1)
-  (reset! y 0.1)
-  (reset! z 0.2)
+  (clean-xyz)
   (.save ctx)
   (.setTransform ctx 1 0 0 1 0 0)
   (.clearRect ctx 0 0 1550 800) ; TODO: make dynamic
@@ -126,6 +127,10 @@
     (.scale ctx 150 150)
     ctx))
 
+(defn set-paint-fn [fn]
+  (clean-xyz)
+  (reset! attract-fn fn))
+
 (defn key-handler [ctx e]
   (case (.-keyCode e)
     13 (.open js/window (.toDataURL js/canvas "image/png"))
@@ -134,12 +139,13 @@
     39 (.rotate ctx -0.1)
     40 (.scale ctx 0.97 0.97)
     38 (.scale ctx 1.03 1.03)
-    49 (reset! attract-fn clifford)
-    50 (reset! attract-fn dejong)
-    51 (reset! attract-fn svensson)
-    52 (reset! attract-fn lorenz)
-    53 (reset! attract-fn duffing)
-    54 (reset! attract-fn triz)
+    49 (set-paint-fn clifford)
+    50 (set-paint-fn dejong)
+    51 (set-paint-fn svensson)
+    52 (set-paint-fn lorenz)
+    53 (set-paint-fn duffing)
+    54 (set-paint-fn triz)
+    55 (set-paint-fn aizawa)
     97 (reset! a (rand 3))
     98 (reset! b (rand 3))
     219 (set! (.-globalCompositeOperation ctx) "lighter")
