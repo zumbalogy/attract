@@ -92,9 +92,6 @@ d (* 3.7 @d)
 b 0.7
 c 0.1
 
-x2 (+ x (* t (- (* (- @z b) x) (* d y))))
-y2 (+ y (* t (+ (* d x) (* y (- @z b)))))
-
 czxxx (* c @z x x x)
 ez (+ 1 (* e @z))
 xxyy (+ (* x x) (* y y))
@@ -102,9 +99,9 @@ z3 (/ (* @z @z @z) 3)
 az (* a @z)
 
 z2 (+ @z (* t (- (+ l az czxxx) z3 (* ez xxyy))))]
+x2 (+ x (* t (- (* (- @z b) x) (* d y))))
+y2 (+ y (* t (+ (* d x) (* y (- @z b)))))
 
-(reset! z z2)
-[x2 y2])
 ```
 
 # Further Reading
