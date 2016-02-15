@@ -166,6 +166,8 @@ more better examples
 
 fix bug where snapshot sometimes has white background
 
+maybe be able to have a function do its own color (or at least get better lorenz colors)
+
 # Examples
 
 
