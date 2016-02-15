@@ -42,10 +42,12 @@
 
 (defn aizawa [[x y]]
   (let [t 0.01
-        e 0.25
+        ; e 0.25
+        e @c
         a 0.95
         l 0.6
-        d 3.5
+        ; d 3.5
+        d (* 3 @d)
         b 0.7
         c 0.1
         x2 (+ x (* t (- (* (- @z b) x) (* d y))))
@@ -105,6 +107,9 @@
     (str "rgba(" r "," g "," b "," a ")")))
 
 (defn clear-canvas [ctx]
+  (reset! x 0.1)
+  (reset! y 0.1)
+  (reset! z 0.2)
   (.save ctx)
   (.setTransform ctx 1 0 0 1 0 0)
   (.clearRect ctx 0 0 1550 800) ; TODO: make dynamic

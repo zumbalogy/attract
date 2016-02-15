@@ -8,9 +8,11 @@ body {
 .stats {
   position: absolute;
   margin-top: 24px;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .legend {
+  background-color: rgba(0, 0, 0, 0.4);
   margin-top: 2px;
   position: absolute;
 }
