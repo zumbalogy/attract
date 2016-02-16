@@ -3,9 +3,9 @@
             [cljsjs.d3]
             [attract.mouse :as mouse]))
 
-(def x (atom 0.1))
-(def y (atom 0.1))
-(def z (atom 0.2))
+(def x (atom 1))
+(def y (atom 1))
+(def z (atom 1))
 (def old-x (atom 1))
 (def old-y (atom 1))
 
@@ -79,12 +79,13 @@
                [x2 (+ y2 1)]
                [(- x2 1) y2]])))
 
-(def attract-fn (r/atom clifford))
+; (def attract-fn (r/atom clifford))
+(def attract-fn (r/atom aizawa))
 
 (defn clean-xyz []
-  (reset! x 0.1)
-  (reset! y 0.1)
-  (reset! z 0.2))
+  (reset! x 1)
+  (reset! y 1)
+  (reset! z 1))
 
 (defn reset-a-b []
   (clean-xyz)

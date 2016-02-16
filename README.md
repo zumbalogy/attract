@@ -164,13 +164,12 @@ work on screen sizes besides just my own, mobile and test other browsers
 
 more better examples
 
-fix bug where snapshot sometimes has white background
+fix bug where snapshot sometimes has white background (this is caused by clearning the canvas, so
+  i should reset it to black i think when i do that)
 
 maybe be able to have a function do its own color (or at least get better lorenz colors)
 
 # Examples
-
-
 ![example](https://raw.githubusercontent.com/zumbalogy/attract/master/resources/public/pictures/Screenshot%20from%202016-02-07%2011-43-58.png)
 ![example](https://raw.githubusercontent.com/zumbalogy/attract/master/resources/public/pictures/Screenshot%20from%202016-02-06%2013-59-19.png)
 ![example](https://raw.githubusercontent.com/zumbalogy/attract/master/resources/public/pictures/Screenshot%20from%202016-02-14%2011-51-02.png)
