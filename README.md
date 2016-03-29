@@ -149,6 +149,8 @@ https://github.com/jaybosamiya/chaos-game
 
 https://github.com/alisey/explord.com/blob/master/experiments/strange-attractors/js/attractor.js
 
+http://weavesilk.com/
+
 # TODO
 Performance tuning and maybe getting rid of d3
 
