@@ -105,6 +105,8 @@ y2 (+ y (* t (+ (* d x) (* y (- @z b)))))
 ```
 
 # Further Reading
+https://github.com/mattdesl/color-wander
+
 http://chaoticatmospheres.com/mathrules-strange-attractors
 
 http://www.bentamari.com/attractors.html
