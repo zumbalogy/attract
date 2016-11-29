@@ -158,6 +158,10 @@ Performance tuning and maybe getting rid of d3
 
 better seirpinski stuff
 
+look at http://mathworld.wolfram.com/IceFractal.html and
+https://twitter.com/math_gif/status/795168214875394048
+http://mate.dm.uba.ar/~umolter/materias/multifractal-2014/Papers/Paper-elegido%20por%20Fernando.pdf
+
 more functions
 
 prettier legend
