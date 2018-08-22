@@ -153,6 +153,8 @@ https://github.com/alisey/explord.com/blob/master/experiments/strange-attractors
 
 http://weavesilk.com/
 
+https://johnhw.github.io/umap_primes/index.md.html
+
 # TODO
 Performance tuning and maybe getting rid of d3
 
